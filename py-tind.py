@@ -18,30 +18,36 @@ def Initialize():
     global wait
     Instance = webdriver.Chrome("./chromedriver.exe")
     wait = WebDriverWait(Instance , 10)
+    time.sleep(1)
+    Instance.get(url)
+    input('press any key to run the script')
 
+count = 0
+like_number = 0
 
 def RunFrontApp():
     global Instance
     global wait
-    Instance.get(url)
+    global count
+    global like_number
     time.sleep(2)
 
-    input('press any key to run the script')
     # Locate like btn and click on it
-    locate_like_btn = Instance.find_elements(By.XPATH, '//div[@class="Mx(a) Fxs(0) Sq(70px) Sq(60px)--s Bd Bdrs(50%) Bdc($c-like-green)"]/button')
-    print (len(locate_like_btn))
-
-    for btn in locate_like_btn:
-        print(btn.text)
-
-        while(1):
-            randomint = randint(2,6)
-            time.sleep(randomint)
-            btn.send_keys(Keys.ENTER)
-
-
     
+    while(1):
+        locate_like_btn = Instance.find_elements(By.XPATH, '//div[@class="Mx(a) Fxs(0) Sq(70px) Sq(60px)--s Bd Bdrs(50%) Bdc($c-like-green)"]/button')
+        print (like_number)
+        btn = locate_like_btn[0]
+        randomint = randint(2,5)
+        time.sleep(randomint)
+        try:
+            btn.send_keys(Keys.ENTER)
+            like_number = like_number + 1
+        except:
+            count = count +1
+            input("press any keys to reload browser")
+            Instance.get(url)
+            input("press any keys to start")
+            time.sleep(2)
+                
 
-
-Initialize()
-RunFrontApp()
